@@ -1,0 +1,60 @@
+body {
+    pointer-events: none;
+    height: 100vh;
+    background-color: hsl(0, 0%, 10%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    background-color: hsl(0, 0%, 12%);
+    padding: 10px;
+    border: 2px solid hsl(0, 0%, 20%);
+}
+
+#display-text {
+    height: 60px;
+    font-size: 40px;
+    color: white;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    padding: 0 5px;
+}
+
+hr {
+    border-color: hsl(0, 0%, 1%);
+    margin-bottom: 20px;  
+}
+
+.buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin: 10px;
+}
+
+button {
+    cursor: pointer;
+    pointer-events: auto;
+    border: none;
+    height: 75px;
+    width: 75px;
+    font-size: 32px;
+    color: white;
+    background-color: hsl(0, 0%, 22%);
+    border-radius: 50%;
+}
+
+.delete {
+    font-size: 28px;
+}
+
+.clear {
+    color: hsl(0, 100%, 50%);
+}
+
+.operator {
+    color: hsl(140, 75%, 50%)
+}
