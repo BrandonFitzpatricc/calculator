@@ -68,6 +68,13 @@ const body = document.querySelector("body");
             clear();
             result = undefined;
 
+        } else if (input === "=") {
+            if (operands.length === 2) {
+                result = getResult();
+                clear();
+                displayText.textContent = result;
+            }
+            
         }
     });
 });
