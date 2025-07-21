@@ -68,7 +68,7 @@ const body = document.querySelector("body");
             clear();
             result = undefined;
 
-        } else if (input === "=") {
+        } else if (input === "=" || input === "Enter") {
             evaluateExpression();
 
         } else if (input === "+" || 
