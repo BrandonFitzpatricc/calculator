@@ -17,7 +17,7 @@ const operations = {
 const body = document.querySelector("body");
 ["click", "keydown"].forEach((eventType) => {
     body.addEventListener(eventType, (event) => {
-        let selection = event.type === "click" ? 
+        let input = event.type === "click" ? 
                         event.target.textContent : 
                         event.key;
     });
