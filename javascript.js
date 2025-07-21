@@ -127,7 +127,7 @@ function getResult() {
     if (result !== "CAN'T DIVIDE BY 0") {
         result = Math.round(result * 100) / 100;
         result = result.toString();
-        if (result.length > 8) result = result.toExponential(2);
+        if (result.length > 8) result = Number(result).toExponential(2);
     }
 
     return result;
