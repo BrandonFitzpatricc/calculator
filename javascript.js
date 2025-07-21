@@ -102,7 +102,7 @@ const body = document.querySelector("body");
                     }
                 }
 
-                displayText.textContent += operation.operator;
+                displayText.textContent += " " + operation.operator + " ";
             }
         }
     });
