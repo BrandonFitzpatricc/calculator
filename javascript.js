@@ -70,7 +70,41 @@ const body = document.querySelector("body");
 
         } else if (input === "=") {
             evaluateExpression();
-        } 
+
+        } else if (input === "+" || 
+                   input === "-" || 
+                  (input === "x" || input === "*") || 
+                   input === "/") {
+
+            const isValidInput = operands.length !== 0 || result !== undefined;
+            if (isValidInput) {
+                evaluateExpression();
+
+                if (result) {
+                    if (result === "CAN'T DIVIDE BY 0") return;
+
+                    operands[0] = result;
+                    result = undefined;
+                }
+
+                if (operation) displayText.textContent = displayText.textContent.slice(0, -1);
+
+                if (event.type === "click") operation = operations[event.target.id];
+                else {
+                    if (input === "*") input = "x";
+
+                    for (const obj in operations) {
+                        const operator = operations[obj].operator;
+                        if (input === operator) {
+                            operation = operations[obj];
+                            break;
+                        }
+                    }
+                }
+
+                displayText.textContent += operation.operator;
+            }
+        }
     });
 });
 
