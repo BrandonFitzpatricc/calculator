@@ -38,7 +38,7 @@ const body = document.querySelector("body");
                 operands.push(newCharacter);
                 displayText.textContent += newCharacter;
             } else {
-                const isValidInput = (!isNaN(+newCharacter) ||
+                const isValidInput = ((newCharacter >= "0" && newCharacter <= "9") ||
                                      (newCharacter === "." && !operands.at(-1).includes("."))) &&
                                      operands.at(-1).length < 8;
 
