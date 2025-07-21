@@ -55,7 +55,7 @@ const body = document.querySelector("body");
 
             const isValidInput = operands.length !== 0 || result !== undefined;
             if (isValidInput) {
-                evaluateExpression();
+                if (operands.length === 2) evaluateExpression();
 
                 if (result) {
                     if (result === "CAN'T DIVIDE BY 0") return;
@@ -83,7 +83,7 @@ const body = document.querySelector("body");
             }           
         
         } else if (input === "=" || input === "Enter") {
-            evaluateExpression();
+            if (operands.length === 2) evaluateExpression();
             
         } else if (input === "DEL" || input === "Backspace") {
             if (result) {
@@ -134,9 +134,7 @@ function getResult() {
 }
 
 function evaluateExpression() {
-    if (operands.length === 2) {
-        result = getResult();
-        clear();
-        displayText.textContent = result;
-    }
+    result = getResult();
+    clear();
+    displayText.textContent = result;
 }
