@@ -9,7 +9,7 @@ const operations = {
     subtraction: new Operation("-", (operand1, operand2) => operand1 - operand2),
     multiplication: new Operation("x", (operand1, operand2) => operand1 * operand2),
     division: new Operation("/", (operand1, operand2) => {
-        if (operand2 === "0") return "CAN'T DIVIDE BY 0";
+        if (operand2 === 0) return "CAN'T DIVIDE BY 0";
         else return operand1 / operand2;
     }),
 };
@@ -70,7 +70,7 @@ const body = document.querySelector("body");
 
         } else if (input === "=") {
             evaluateExpression();
-        }
+        } 
     });
 });
 
