@@ -64,6 +64,10 @@ const body = document.querySelector("body");
 
             displayText.textContent = displayText.textContent.slice(0, -1);
             
+        } else if(input === "C") {
+            clear();
+            result = undefined;
+            
         }
     });
 });
