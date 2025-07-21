@@ -67,7 +67,7 @@ function getResult() {
     
     let result = operation.operate(+operands[0], +operands[1]);
 
-    if(!result === "CAN'T DIVIDE BY 0") {
+    if(result !== "CAN'T DIVIDE BY 0") {
         result = Math.round(result * 100) / 100;
         result = result.toString();
         if(result.length > 8) result = result.toExponential(2);
