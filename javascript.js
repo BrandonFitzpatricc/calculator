@@ -69,12 +69,7 @@ const body = document.querySelector("body");
             result = undefined;
 
         } else if (input === "=") {
-            if (operands.length === 2) {
-                result = getResult();
-                clear();
-                displayText.textContent = result;
-            }
-            
+            evaluateExpression();
         }
     });
 });
@@ -102,4 +97,12 @@ function getResult() {
     }
 
     return result;
+}
+
+function evaluateExpression() {
+    if (operands.length === 2) {
+        result = getResult();
+        clear();
+        displayText.textContent = result;
+    }
 }
