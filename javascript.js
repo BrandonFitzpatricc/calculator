@@ -1,4 +1,4 @@
-const displayText = document.querySelector("display-text");
+const displayText = document.querySelector("#display-text");
 
 const operands = [];
 let operation;
@@ -20,6 +20,34 @@ const body = document.querySelector("body");
         let input = event.type === "click" ? 
                         event.target.textContent : 
                         event.key;
+
+        if((input >= "0" && input <= "9") || input === ".") {
+            let newCharacter = input;
+
+            const isNewOperand = operands.length === 0 ||
+                                 (operands.length === 1 && operation !== undefined);
+
+            if(isNewOperand) {
+                if(result) {
+                    displayText.textContent = "";
+                    result = undefined;
+                }
+
+                if(newCharacter === ".") newCharacter = "0" + newCharacter;
+
+                operands.push(newCharacter);
+                displayText.textContent += newCharacter;
+            } else {
+                const isValidInput = (!isNaN(+newCharacter) ||
+                                     (newCharacter === "." && !operands.at(-1).includes("."))) &&
+                                     operands.at(-1).length < 8;
+
+                if(isValidInput) {
+                    operands[operands.length - 1] += newCharacter;
+                    displayText.textContent += newCharacter;
+                }
+            }
+        }
     });
 });
 
