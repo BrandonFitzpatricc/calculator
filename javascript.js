@@ -47,29 +47,6 @@ const body = document.querySelector("body");
                     displayText.textContent += newCharacter;
                 }
             }
-            
-        } else if (input === "DEL" || input === "Backspace") {
-            if (result) {
-                if (result === "CAN'T DIVIDE BY 0") displayText.textContent = "";
-                else operands[0] = result;
-                result = undefined;
-            }
-
-            const operatorIsBeingDeleted = operands.length === 1 && operation !== undefined;
-            if (operatorIsBeingDeleted) operation = undefined;
-            else if (operands.length !== 0) {
-                operands[operands.length - 1] = operands.at(-1).slice(0, -1);
-                if (operands.at(-1).length === 0) operands.pop();
-            }
-
-            displayText.textContent = displayText.textContent.slice(0, -1);
-            
-        } else if (input === "C") {
-            clear();
-            result = undefined;
-
-        } else if (input === "=" || input === "Enter") {
-            evaluateExpression();
 
         } else if (input === "+" || 
                    input === "-" || 
@@ -103,7 +80,30 @@ const body = document.querySelector("body");
                 }
 
                 displayText.textContent += " " + operation.operator + " ";
+            }           
+        
+        } else if (input === "=" || input === "Enter") {
+            evaluateExpression();
+            
+        } else if (input === "DEL" || input === "Backspace") {
+            if (result) {
+                if (result === "CAN'T DIVIDE BY 0") displayText.textContent = "";
+                else operands[0] = result;
+                result = undefined;
             }
+
+            const operatorIsBeingDeleted = operands.length === 1 && operation !== undefined;
+            if (operatorIsBeingDeleted) operation = undefined;
+            else if (operands.length !== 0) {
+                operands[operands.length - 1] = operands.at(-1).slice(0, -1);
+                if (operands.at(-1).length === 0) operands.pop();
+            }
+
+            displayText.textContent = displayText.textContent.slice(0, -1);
+            
+        } else if (input === "C") {
+            clear();
+            result = undefined;
         }
     });
 });
