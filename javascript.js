@@ -5,7 +5,7 @@ const operands = [];
 
 // This variable will hold an object containing both the operator of the next operation to be performed,
 // and a function that performs the operation.
-let operation;
+let currentOperation;
 
 // This variable will only be defined when the result of an expression is calculated and being displayed.
 // Any actions that take place while the result variable is defined will either clear the variable
@@ -39,7 +39,7 @@ const body = document.querySelector("body");
             let newCharacter = input;
 
             const isNewOperand = operands.length === 0 ||
-                                 (operands.length === 1 && operation !== undefined);
+                                 (operands.length === 1 && currentOperation !== undefined);
 
             if (isNewOperand) {
                 // Starting a new operand while a result is being displayed will clear the result.
@@ -84,11 +84,11 @@ const body = document.querySelector("body");
 
                 // If two consecutive operators are entered, the second will override the first.
                 // Note: Operators contain a space before and after them, so three characters must be deleted.
-                if (operation) displayText.textContent = displayText.textContent.slice(0, -3);
+                if (currentOperation) displayText.textContent = displayText.textContent.slice(0, -3);
 
                 // The button ids for the operators are "addition", "subtraction", "multiplication",
                 // and "division" respectively, which match up with the properties of the operations object.
-                if (event.type === "click") operation = operations[event.target.id];
+                if (event.type === "click") currentOperation = operations[event.target.id];
                 else {
                     // "*", and "x" both represent multiplication, but "x" is used to retrieve the
                     // operation from key presses.
@@ -98,13 +98,13 @@ const body = document.querySelector("body");
                     for (const obj in operations) {
                         const operator = operations[obj].operator;
                         if (input === operator) {
-                            operation = operations[obj];
+                            currentOperation = operations[obj];
                             break;
                         }
                     }
                 }
 
-                displayText.textContent += " " + operation.operator + " ";
+                displayText.textContent += " " + currentOperation.operator + " ";
             }           
         
         } else if (input === "=" || input === "Enter") {
@@ -119,11 +119,11 @@ const body = document.querySelector("body");
                 result = undefined;
             }
 
-            const operatorIsBeingDeleted = operands.length === 1 && operation !== undefined;
+            const operatorIsBeingDeleted = operands.length === 1 && currentOperation !== undefined;
             if (operatorIsBeingDeleted) {
                 // Note: Operators contain a space before and after them, so three characters must be deleted.
                 displayText.textContent = displayText.textContent.slice(0, -3);
-                operation = undefined;
+                currentOperation = undefined;
             } else if (operands.length !== 0) {
                 displayText.textContent = displayText.textContent.slice(0, -1);
                 operands[operands.length - 1] = operands.at(-1).slice(0, -1);
@@ -144,7 +144,7 @@ function Operation(operator, operate) {
 
 function clear() {
     operands.length = 0;
-    operation = undefined;
+    currentOperation = undefined;
     displayText.textContent = "";
 }
 
@@ -154,7 +154,7 @@ function getResult() {
     // notation form (e.g. "4.32e+"), then only the number portion of the operand will be used.
     if (isNaN(operands[0].slice(-1))) operands[0] = operands[0].split("e")[0];
     
-    let result = operation.operate(+operands[0], +operands[1]);
+    let result = currentOperation.operate(+operands[0], +operands[1]);
 
     if (result !== "CAN'T DIVIDE BY 0") {
         result = Math.round(result * 100) / 100;
