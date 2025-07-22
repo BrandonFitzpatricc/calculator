@@ -1,9 +1,18 @@
 const displayText = document.querySelector("#display-text");
 
+// This array will always contain two operands at most, both of which to be used in the next expression.
 const operands = [];
+
+// This variable will hold an object containing both the operator of the next operation to be performed,
+// and a function that performs the operation.
 let operation;
+
+// This variable will only be defined when the result of an expression is calculated and being displayed.
+// Any actions that take place while the result variable is defined will either clear the variable
+// entirely, or move its value to the operands array for future operations.
 let result;
 
+// The current operation will be retrieved from this object when the user enters an operator.
 const operations = {
     addition: new Operation("+", (operand1, operand2) => operand1 + operand2),
     subtraction: new Operation("-", (operand1, operand2) => operand1 - operand2),
@@ -17,6 +26,7 @@ const operations = {
 const body = document.querySelector("body"); 
 ["click", "keydown"].forEach((eventType) => {
     body.addEventListener(eventType, (event) => {
+        // Both button clicks and key presses will be handled here.
         let input = event.type === "click" ? 
                         event.target.textContent : 
                         event.key;
@@ -28,6 +38,7 @@ const body = document.querySelector("body");
                                  (operands.length === 1 && operation !== undefined);
 
             if (isNewOperand) {
+                // Starting a new operand while a result is being displayed will clear the result.
                 if (result) {
                     displayText.textContent = "";
                     result = undefined;
@@ -38,6 +49,7 @@ const body = document.querySelector("body");
                 operands.push(newCharacter);
                 displayText.textContent += newCharacter;
             } else {
+                // Note: The current operand being worked on will always be at the end of the operands array.
                 const isValidInput = ((newCharacter >= "0" && newCharacter <= "9") ||
                                      (newCharacter === "." && !operands.at(-1).includes("."))) &&
                                      operands.at(-1).length < 8;
@@ -57,6 +69,8 @@ const body = document.querySelector("body");
             if (isValidInput) {
                 if (operands.length === 2) evaluateExpression();
 
+                // If a result is being displayed, then it will be moved to the operands array to be used
+                // in the following expression (if it's not the divide by 0 error message).
                 if (result) {
                     if (result === "CAN'T DIVIDE BY 0") return;
 
@@ -64,12 +78,18 @@ const body = document.querySelector("body");
                     result = undefined;
                 }
 
+                // If two consecutive operators are entered, the second will override the first.
                 if (operation) displayText.textContent = displayText.textContent.slice(0, -1);
 
+                // The button ids for the operators are "addition", "subtraction", "multiplication",
+                // and "division" respectively, which match up with the properties of the operations object.
                 if (event.type === "click") operation = operations[event.target.id];
                 else {
+                    // "*", and "x" both represent multiplication, but "x" is used to retrieve the
+                    // operation from key presses.
                     if (input === "*") input = "x";
 
+                    // Retrieve the operation object whose operator property matches the input key.
                     for (const obj in operations) {
                         const operator = operations[obj].operator;
                         if (input === operator) {
@@ -87,6 +107,8 @@ const body = document.querySelector("body");
             
         } else if (input === "DEL" || input === "Backspace") {
             if (result) {
+                // The divide by 0 error message should be fully cleared if it is being displayed.
+                // Otherwise, the result should be treated as an operand and have its latest character removed.
                 if (result === "CAN'T DIVIDE BY 0") displayText.textContent = "";
                 else operands[0] = result;
                 result = undefined;
@@ -120,6 +142,9 @@ function clear() {
 }
 
 function getResult() {
+    // It is possible that the first operand will be in exponential notation if it is taken from the
+    // previous result. If the user deleted a part of this operand and it is not in proper exponential
+    // notation form (e.g. "4.32e+"), then only the number portion of the operand will be used.
     if (isNaN(operands[0].slice(-1))) operands[0] = operands[0].split("e")[0];
     
     let result = operation.operate(+operands[0], +operands[1]);
