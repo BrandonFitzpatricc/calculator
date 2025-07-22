@@ -95,10 +95,10 @@ const body = document.querySelector("body");
                     if (input === "*") input = "x";
 
                     // Retrieve the operation object whose operator property matches the input key.
-                    for (const obj in operations) {
-                        const operator = operations[obj].operator;
+                    for (const operation in operations) {
+                        const operator = operations[operation].operator;
                         if (input === operator) {
-                            currentOperation = operations[obj];
+                            currentOperation = operations[operation];
                             break;
                         }
                     }
