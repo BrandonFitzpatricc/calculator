@@ -130,7 +130,7 @@ const body = document.querySelector("body");
                 if (operands.at(-1).length === 0) operands.pop();
             }
             
-        } else if (input === "C") {
+        } else if (input.toLowerCase() === "c") {
             clear();
             result = undefined;
         }
