@@ -71,7 +71,10 @@ const body = document.querySelector("body");
 
             const isValidInput = operands.length !== 0 || result !== undefined;
             if (isValidInput) {
-                if (operands.length === 2) evaluateExpression();
+                if (operands.length === 2) {
+                    result = getResult();
+                    displayResult();
+                } 
 
                 // If a result is being displayed, then it will be moved to the operands array to be used
                 // in the following expression (if it's not the divide by 0 error message).
@@ -108,7 +111,10 @@ const body = document.querySelector("body");
             }           
         
         } else if (input === "=" || input === "Enter") {
-            if (operands.length === 2) evaluateExpression();
+            if (operands.length === 2) { 
+                result = getResult();
+                displayResult();
+            }
             
         } else if (input === "DEL" || input === "Backspace") {
             if (result) {
@@ -165,8 +171,7 @@ function getResult() {
     return result;
 }
 
-function evaluateExpression() {
-    result = getResult();
+function displayResult() {
     clear();
     displayText.textContent = result;
 }
