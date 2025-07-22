@@ -32,8 +32,8 @@ const body = document.querySelector("body");
 
         // Both button clicks and key presses will be handled here.
         let input = event.type === "click" ? 
-                        event.target.textContent : 
-                        event.key;
+                    event.target.textContent : 
+                    event.key;
 
         if ((input >= "0" && input <= "9") || input === ".") {
             let newCharacter = input;
