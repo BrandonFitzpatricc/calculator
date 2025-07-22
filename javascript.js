@@ -79,7 +79,8 @@ const body = document.querySelector("body");
                 }
 
                 // If two consecutive operators are entered, the second will override the first.
-                if (operation) displayText.textContent = displayText.textContent.slice(0, -1);
+                // Note: Operators contain a space before and after them, so three characters must be deleted.
+                if (operation) displayText.textContent = displayText.textContent.slice(0, -3);
 
                 // The button ids for the operators are "addition", "subtraction", "multiplication",
                 // and "division" respectively, which match up with the properties of the operations object.
@@ -115,13 +116,15 @@ const body = document.querySelector("body");
             }
 
             const operatorIsBeingDeleted = operands.length === 1 && operation !== undefined;
-            if (operatorIsBeingDeleted) operation = undefined;
-            else if (operands.length !== 0) {
+            if (operatorIsBeingDeleted) {
+                // Note: Operators contain a space before and after them, so three characters must be deleted.
+                displayText.textContent = displayText.textContent.slice(0, -3);
+                operation = undefined;
+            } else if (operands.length !== 0) {
+                displayText.textContent = displayText.textContent.slice(0, -1);
                 operands[operands.length - 1] = operands.at(-1).slice(0, -1);
                 if (operands.at(-1).length === 0) operands.pop();
             }
-
-            displayText.textContent = displayText.textContent.slice(0, -1);
             
         } else if (input === "C") {
             clear();
