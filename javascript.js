@@ -26,6 +26,10 @@ const operations = {
 const body = document.querySelector("body"); 
 ["click", "keydown"].forEach((eventType) => {
     body.addEventListener(eventType, (event) => {
+        // It's possible for the enter key to trigger unwanted button clicks. This line of code
+        // ensures that only mouse clicks will trigger them.
+        if (event.type === "click" && event.pointerType !== "mouse") return;
+
         // Both button clicks and key presses will be handled here.
         let input = event.type === "click" ? 
                         event.target.textContent : 
